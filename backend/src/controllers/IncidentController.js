@@ -45,15 +45,15 @@ const connection = require('../database/connection');
         const ong_id = request.headers.authorization;
 
         const incident = await connection('incidents')
-                         .where('id',id)
+                         .where('id', id)
                          .select('ong_id')
                          .first();
 
        if(incident.ong_id !== ong_id){
-           return response.status(401).json({error:'Operation not permitted.'}); 
+           return response.status(401).json({ error: 'Operation not permitted.'}); 
        }   
        
-       connection('incidents').where('id', id).delete();
+       await connection('incidents').where('id', id).delete();
 
        return response.status(204).send();
        
